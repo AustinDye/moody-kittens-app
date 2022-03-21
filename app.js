@@ -3,17 +3,6 @@ let kittens = []
 const kittenImg = "tcRRB2kUirfj7odKakeYPP-1200-80.jpg"
 const kittenAngy = "angrykitty.jpg"
 
-
-/**
- *
- *multi use random number generator w/decimal placement adjustment
- * ie 1, 10 , 100, 1000 in the place of 'max' when the function is called
- */
-function getRandomInt(max) {
-    Math.floor(Math.random() * max)
-}
-
-
 /**
  * Called when submitting the new Kitten Form
  * This method will pull data from the form
@@ -35,7 +24,6 @@ function addKitten(event)   {
     }
     
     let n = kittens.find(k=>k.name == form.name.value)
-    console.log(n)
     if (!n)
     {
         kittens.push(kitten)
@@ -59,11 +47,11 @@ function removeKitten(id) {
 
 }
 
-
 /**
  * Converts the kittens array to a JSON string then
  * Saves the string to localstorage at the key kittens 
  */
+
 function saveKittens()  {
     window.localStorage.setItem("kittens", JSON.stringify(kittens))
 } 
@@ -73,6 +61,7 @@ function saveKittens()  {
  * then parses the JSON string into an array. Finally sets
  * the kittens array to the retrieved array
  */
+
 function loadKittens()  {
     let storedKittens = JSON.parse(window.localStorage.getItem("kittens"))
     if (storedKittens)  {
@@ -84,6 +73,7 @@ function loadKittens()  {
 /**
  * Draw all of the kittens to the kittens element
  */
+
 function drawKittens()  {
     let template = ""
    
@@ -97,15 +87,15 @@ function drawKittens()  {
         
         <p1 id="${k.name}">${k.name}</p1>
         <br>
-        <p2 id="${k.mood}">${k.mood}</p2>
+        <p2 id="${k.mood}">Mood: ${k.mood}</p2>
         <br>
-        <p3 id="${k.affection}">${k.affection}</p3>
+        <p3 id="${k.affection}">Affection: ${k.affection}</p3>
           <br>
-          <button  onclick="pet('${k.id}')">pet</button>
+          <button  onclick="pet('${k.id}')">Pet</button>
           <br>
-          <button onclick="feed('${k.id}')">feed</button>
+          <button onclick="feed('${k.id}')">Feed</button>
           <br>
-          <button onclick="removeKitten('${k.id}')">delete</button>
+          <button onclick="removeKitten('${k.id}')">Free</button>
         </div>
       </div>
       `
@@ -113,22 +103,17 @@ function drawKittens()  {
     document.getElementById("kittens").innerHTML = template
 }
 
-
-
-
 /**
  * Find the kitten in the array by its id
  * @param {string} id 
  * @return {Kitten}
  */
+
 function findKittenById(id) {
-    
     let found =kittens.find(k =>k.id == id)
+
     return found
     
-}
-function showMe(){
-    let kitten =findKittenById(id)
 }
 
 /**
@@ -139,10 +124,10 @@ function showMe(){
  * otherwise decrease the affection
  * @param {string} id 
  */
+
 function pet(id) {
     let kitten = findKittenById(id)
     let petAttempt= Math.random()
-    
     
     if (petAttempt >= .6){
         kitten.affection +=1
@@ -164,7 +149,9 @@ function pet(id) {
  */
 function feed(id) {
     let kitten = findKittenById(id)
+
     kitten.affection += 1
+
     setKittenMood(kitten)
     saveKittens()
     drawKittens()
@@ -201,25 +188,10 @@ function setKittenMood(kitten) {
  */
 function clearKittens() {
     kittens = []
+
     saveKittens()
-    getStarted()
+    drawKittens()
 }
-
-/**
- * Removes the welcome content and should probably draw the 
- * list of kittens to the page. Good Luck
- */
-function getStarted() {
-  document.getElementById("welcome").remove();
-  
-}
-
-function checkStarted() {
-    if (kittens.length) {
-      document.getElementById("welcome").firstElementChild.innerHTML += `<button class="btn-cancel" onclick="clearKittens()">Clear ${kittens.length} Kittens</button>`
-    }
-}
-
 
 // --------------------------------------------- No Changes below this line are needed
 
@@ -227,7 +199,6 @@ function checkStarted() {
  * Defines the Properties of a Kitten
  * @typedef {{name: string, mood: string, affection: number}} Kitten
  */
-
 
 /**
  * Used to generate a random string id for mocked
